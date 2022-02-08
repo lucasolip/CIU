@@ -61,9 +61,22 @@ class Ball {
   }
   
   boolean collidesWithPlayer(Paddle player) {
+    if (collides(position.x + velocity.x, position.y, player)) {
+      velocity.x*=-1;
+    } 
+    if (collides(position.x, position.y + velocity.y, player)) {
+      velocity.y*=-1;
+    }
     return (position.x + radius > player.position.x &&
             position.y + radius > player.position.y &&
             position.x - radius < player.position.x + player.w &&
             position.y - radius < player.position.y + player.h);
+  }
+  
+  boolean collides(float x, float y, Paddle player) {
+    return (x + radius > player.position.x &&
+            y + radius > player.position.y &&
+            x - radius < player.position.x + player.w &&
+            y - radius < player.position.y + player.h);
   }
 }

@@ -51,11 +51,9 @@ void draw() {
   
   // Physics
   if (ball.collidesWithPlayer(player1)) {
-    ball.velocity.x *= -1;
     bounceSound1.play();
   }
   if (ball.collidesWithPlayer(player2)) {
-    ball.velocity.x *= -1;
     bounceSound2.play();
   }
   ball.update();
