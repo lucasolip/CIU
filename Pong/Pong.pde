@@ -7,7 +7,9 @@ PFont font;
 boolean[] keys = new boolean[4];
 SoundFile bounceSound1, bounceSound2, bounceSound3, hitSound, fanfareSound;
 String fontPath = "media/FFFFORWA.TTF";
-boolean gameRunning = false;
+boolean gameRunning = true;
+long lastHit = 0;
+long handicapTime = 1000;
 
 void setup() {
   size(640, 480);
@@ -18,7 +20,6 @@ void setup() {
   hitSound = new SoundFile(this, "media/hit.wav");
   fanfareSound = new SoundFile(this, "media/fanfare.wav");
   
-  noLoop();
   begin();
 }
 
@@ -36,6 +37,7 @@ void begin() {
 
 void draw() {
   background(0);
+  println(System.currentTimeMillis());
   
   // User Interface
   drawMidLine(16);
@@ -67,10 +69,10 @@ void draw() {
 }
 
 void checkEndgame() {
-  if (scorePlayer1 > 2) {
+  if (scorePlayer1 > 9) {
     endgame("GANA", "PIERDE");
   }
-  if (scorePlayer2 > 2) {
+  if (scorePlayer2 > 9) {
     endgame("PIERDE", "GANA");
   }
 }
@@ -84,6 +86,7 @@ void endgame(String text1, String text2) {
   textFont(createFont(fontPath, 52));
   text(text1, width/4, height/4);
   text(text2, 3*width/4, height/4);
+  text("Pulsa espacio para reiniciar", width/2, height/2);
   player1.display();
   player2.display();
   noLoop();

@@ -26,30 +26,36 @@ class Ball {
   }
   
   void edges() {
-    boolean flag = false;
     if (position.x < radius) {
       velocity.x *= -1;
       position.x = radius;
-      scorePlayer2++;
-      hitSound.play();
+      if (System.currentTimeMillis() - lastHit > handicapTime) {
+        scorePlayer2++;
+        lastHit = System.currentTimeMillis();
+        hitSound.play();
+      } else {
+        bounceSound3.play();
+      }
     }
     if (position.x > width - radius) {
       velocity.x *= -1;
       position.x = width - radius;
-      scorePlayer1++;
-      hitSound.play();
+      if (System.currentTimeMillis() - lastHit > handicapTime) {
+        scorePlayer1++;
+        lastHit = System.currentTimeMillis();
+        hitSound.play();
+      } else {
+        bounceSound3.play();
+      }
     }
     if (position.y < radius) {
       velocity.y *= -1;
       position.y = radius;
-      flag = true;
+      bounceSound3.play();
     }
     if (position.y > height - radius) {
       velocity.y *= -1;
       position.y = height - radius;
-      flag = true;
-    }
-    if (flag) {
       bounceSound3.play();
     }
   }
