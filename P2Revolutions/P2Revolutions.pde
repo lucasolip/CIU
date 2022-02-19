@@ -4,7 +4,7 @@ boolean surfaceCreated = false;
 final int numRings = 28;
 final float angleStep = TWO_PI/numRings;
 float shapeAngle = 0;
-PVector previousVertex;
+PVector previousVertexRight, previousVertexLeft;
 boolean light, rotation, wireframe, fill, help;
 
 void setup() {
@@ -30,39 +30,45 @@ void draw() {
     if (rotation) shapeAngle += 0.05;
   } else {
     if (help) text("Click: Añadir vértices\nClick y arrastrar: Dibujar\nEspacio: Generar superficie\nH: Ayuda", 15, 30);
-    mouseControl();
-    translate(width/2, 0, 0);
+    if (mousePressed) mouseControl();
+    showUI();
   }
 }
 
 void mouseControl() {
-  if (mousePressed) {
-    PVector mouse = new PVector(mouseX - width/2, mouseY);
-    if (mouse.x > 0 && (null == previousVertex || PVector.dist(mouse, previousVertex) > 10)) {
-      if (vertices.size() < 1) {
-        vertices.add(new PVector(0, mouse.y));
-      }
-      previousVertex = new PVector(mouse.x, mouse.y);
-      vertices.add(new PVector(mouse.x, mouse.y));
-    } else if (mouse.x < 0 && (null == previousVertex || PVector.dist(mouse, previousVertex) > 10)) {
-      if (vertices.size() < 1) {
-        vertices.add(new PVector(0, mouse.y));
-      }
-      previousVertex = new PVector(-mouse.x, mouse.y);
-      vertices.add(new PVector(-mouse.x, mouse.y));
+  PVector mouse = new PVector(mouseX - width/2, mouseY);
+  if (mouse.x > 0 && (null == previousVertexRight || PVector.dist(mouse, previousVertexRight) > 10)) {
+    if (vertices.size() < 1) {
+      vertices.add(new PVector(0, mouse.y));
     }
+    previousVertexRight = new PVector(mouse.x, mouse.y);
+    previousVertexLeft = new PVector(-mouse.x, mouse.y);
+    vertices.add(new PVector(mouse.x, mouse.y));
+  } else if (mouse.x < 0 && (null == previousVertexRight || PVector.dist(mouse, previousVertexRight) > 10)) {
+    if (vertices.size() < 1) {
+      vertices.add(new PVector(0, mouse.y));
+    }    
+    previousVertexRight = new PVector(mouse.x, mouse.y);
+    previousVertexLeft = new PVector(-mouse.x, mouse.y);
+    vertices.add(new PVector(-mouse.x, mouse.y));
   }
 }
 
 void showUI() {
+  translate(width/2, 0, 0);
   line(0, 0, 0, height);
   for (int i = 0; i < vertices.size(); i++) {
     if (i < vertices.size() - 1) {
       line(vertices.get(i).x, vertices.get(i).y, vertices.get(i+1).x, vertices.get(i+1).y);
+      line(-vertices.get(i).x, vertices.get(i).y, -vertices.get(i+1).x, vertices.get(i+1).y);
     }
   }
-  if (null != previousVertex && vertices.size() > 0) {
-    line(vertices.get(vertices.size() - 1).x, vertices.get(vertices.size() - 1).y, mouseX - width/2, mouseY);
+  if (null != previousVertexRight && vertices.size() > 0) {
+    if (mouseX > width/2) {
+      line(previousVertexRight.x, previousVertexRight.y, mouseX - width/2, mouseY);
+    } else {
+      line(previousVertexLeft.x, previousVertexLeft.y, mouseX - width/2, mouseY);
+    }
   }
 }
 
