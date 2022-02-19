@@ -22,3 +22,7 @@ Las coordenadas de los vértices del perfil se guardan como PVector en un ArrayL
   - F: Mostrar/Ocultar relleno de las caras
   - Espacio: Cambiar a vista de dibujo
   - H: Mostrar/Ocultar ayuda
+
+## Referencias
+- [Referencia de Processing](https://processing.org/reference/)
+- [Guion de la práctica 2 de Creando Interfaces de Usuario](https://github.com/otsedom/otsedom.github.io/blob/main/CIU/P2/README.md)
