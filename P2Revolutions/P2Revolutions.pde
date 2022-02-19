@@ -30,26 +30,39 @@ void draw() {
     if (rotation) shapeAngle += 0.05;
   } else {
     if (help) text("Click: Añadir vértices\nClick y arrastrar: Dibujar\nEspacio: Generar superficie\nH: Ayuda", 15, 30);
-    if (mousePressed) {
-      PVector mouse = new PVector(mouseX - width/2, mouseY);
-      if (mouse.x > 0 && (null == previousVertex || PVector.dist(mouse, previousVertex) > 10)) {
-        if (vertices.size() < 1) {
-          vertices.add(new PVector(0, mouse.y));
-        }
-        previousVertex = new PVector(mouse.x, mouse.y);
-        vertices.add(new PVector(mouse.x, mouse.y));
-      }
-    }
+    mouseControl();
     translate(width/2, 0, 0);
-    line(0, 0, 0, height);
-    for (int i = 0; i < vertices.size(); i++) {
-      if (i < vertices.size() - 1) {
-        line(vertices.get(i).x, vertices.get(i).y, vertices.get(i+1).x, vertices.get(i+1).y);
+  }
+}
+
+void mouseControl() {
+  if (mousePressed) {
+    PVector mouse = new PVector(mouseX - width/2, mouseY);
+    if (mouse.x > 0 && (null == previousVertex || PVector.dist(mouse, previousVertex) > 10)) {
+      if (vertices.size() < 1) {
+        vertices.add(new PVector(0, mouse.y));
       }
+      previousVertex = new PVector(mouse.x, mouse.y);
+      vertices.add(new PVector(mouse.x, mouse.y));
+    } else if (mouse.x < 0 && (null == previousVertex || PVector.dist(mouse, previousVertex) > 10)) {
+      if (vertices.size() < 1) {
+        vertices.add(new PVector(0, mouse.y));
+      }
+      previousVertex = new PVector(-mouse.x, mouse.y);
+      vertices.add(new PVector(-mouse.x, mouse.y));
     }
-    if (null != previousVertex && vertices.size() > 0) {
-      line(vertices.get(vertices.size() - 1).x, vertices.get(vertices.size() - 1).y, mouseX - width/2, mouseY);
+  }
+}
+
+void showUI() {
+  line(0, 0, 0, height);
+  for (int i = 0; i < vertices.size(); i++) {
+    if (i < vertices.size() - 1) {
+      line(vertices.get(i).x, vertices.get(i).y, vertices.get(i+1).x, vertices.get(i+1).y);
     }
+  }
+  if (null != previousVertex && vertices.size() > 0) {
+    line(vertices.get(vertices.size() - 1).x, vertices.get(vertices.size() - 1).y, mouseX - width/2, mouseY);
   }
 }
 
