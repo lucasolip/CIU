@@ -38,18 +38,14 @@ void draw() {
 void mouseControl() {
   PVector mouse = new PVector(mouseX - width/2, mouseY);
   if (mouse.x > 0 && (null == previousVertexRight || PVector.dist(mouse, previousVertexRight) > 10)) {
-    if (vertices.size() < 1) {
-      vertices.add(new PVector(0, mouse.y));
-    }
+    if (vertices.size() < 1) vertices.add(new PVector(0, mouse.y));
     previousVertexRight = new PVector(mouse.x, mouse.y);
     previousVertexLeft = new PVector(-mouse.x, mouse.y);
     vertices.add(new PVector(mouse.x, mouse.y));
-  } else if (mouse.x < 0 && (null == previousVertexRight || PVector.dist(mouse, previousVertexRight) > 10)) {
-    if (vertices.size() < 1) {
-      vertices.add(new PVector(0, mouse.y));
-    }    
-    previousVertexRight = new PVector(mouse.x, mouse.y);
-    previousVertexLeft = new PVector(-mouse.x, mouse.y);
+  } else if (mouse.x < 0 && (null == previousVertexRight || PVector.dist(mouse, previousVertexLeft) > 10)) {
+    if (vertices.size() < 1) vertices.add(new PVector(0, mouse.y));
+    previousVertexRight = new PVector(-mouse.x, mouse.y);
+    previousVertexLeft = new PVector(mouse.x, mouse.y);
     vertices.add(new PVector(-mouse.x, mouse.y));
   }
 }
