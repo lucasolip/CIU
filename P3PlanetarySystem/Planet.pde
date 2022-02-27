@@ -80,6 +80,9 @@ class Planet extends CelestialBody {
     fill(-1);
     textSize(0.02*distance);
     text(name, 0, -2*radius);
+    // La manera correcta de hacer esto sería determinar las coordenadas del planeta 
+    // en Screen space a partir de las coordenadas en World space, y dibujar el texto ahí, sobre la pantalla, con un cierto offset en y.
+    // Pero ahora mismo no sé cómo hacer eso con PeasyCam. Supongo que tendrá que ver con las coordenadas de la cámara y la proyección perspectiva
     popMatrix();
   }
 }

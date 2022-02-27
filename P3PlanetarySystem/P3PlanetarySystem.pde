@@ -17,7 +17,8 @@ ArrayList<Planet> satellites;
 Star star;
 PShape skysphere;
 
-int numPlanets = 5;
+boolean help = true;
+final int numPlanets = 5;
 
 void setup()
 {
@@ -80,7 +81,7 @@ void draw()
   cam.beginHUD();
   fill(-1);
   textSize(18);
-  text("R: Regenerar sistema", 15, 30);
+  if (help) text("R: Regenerar sistema\nH: Mostrar/Ocultar ayuda", 125, 30);
   cam.endHUD();
 }
 
@@ -101,5 +102,8 @@ void generateSystem() {
 void keyPressed() {
   if (key == 'r' || key == 'R') {
     generateSystem();
+  }
+  if (key == 'h' || key == 'H') {
+    help = !help;
   }
 }
