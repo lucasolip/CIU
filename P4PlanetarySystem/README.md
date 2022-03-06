@@ -36,6 +36,7 @@ Hubo que implementar métodos de rotación para los tres ejes y un método de tr
 
 ## Referencias
 - [Referencia de Processing](https://processing.org/reference/)
+- [Wikipedia - Rotation matrix](https://en.wikipedia.org/wiki/Rotation_matrix)
 - Recursos
   - [Background, NASA](https://svs.gsfc.nasa.gov/3895)
   - Music (Bubblaine theme - Underwater version): Naoto Kubo, Super Mario Odyssey, Nintendo
