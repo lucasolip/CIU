@@ -15,16 +15,18 @@ ArrayList<Planet> planets;
 ArrayList<Planet> satellites;
 Star star;
 PShape skysphere;
+PShape spaceship;
 
 boolean help = true;
+boolean view = true;
 final int numPlanets = 5;
 
 void setup()
 {
   size(1024, 720, P3D);
   
-  //textAlign(CENTER, CENTER);
   background = loadImage("media/outerspace.jpg");
+  spaceship = loadShape("media/spaceship.obj");
   planetTextures = new PImage[] {
     loadImage("media/sedna.png"), 
     loadImage("media/earth-like.jpg"),
@@ -34,7 +36,7 @@ void setup()
     loadImage("media/planet.png"),
     loadImage("media/crateroso.png")};
   music = new SoundFile(this, "media/bubblaine underwater.wav");
-  //music.loop();
+  music.loop();
   
   noStroke();
   planets = new ArrayList<Planet>();
@@ -62,7 +64,7 @@ void draw()
   star.update();
   
   for (Planet planet : planets) {
-    //planet.displayName();
+    planet.displayName();
   }
   
   pointLight(255,255,255,0,0,0);
@@ -72,12 +74,17 @@ void draw()
     planet.display();
   }
   
+  camera.showSpaceship();
+  
   
   hint(DISABLE_DEPTH_TEST);
   noLights();
   camera(width*0.5, height*0.5, (height*0.5) / tan(PI/6), width*0.5, height*0.5, 0, 0, 1, 0);
   fill(255);
-  if (help) text("R: Regenerar sistema\nH: Mostrar/Ocultar ayuda", 150, 125);
+  textSize(12);
+  textAlign(LEFT, UP);
+  if (help && view) text("R: Regenerar sistema\nQ: Cambiar a vista nave\nH: Mostrar/Ocultar ayuda", 160, 125);
+  if (help && !view) text("R: Regenerar sistema\nQ: Cambiar a vista general\nClick y arrastrar: Mirar alrededor\nEspacio: Avanzar\nI: Invertir controles de la cámara\nE: Reiniciar vista de nave\nH: Mostrar/Ocultar ayuda", 160, 125);
   hint(ENABLE_DEPTH_TEST);
 }
 
@@ -104,5 +111,12 @@ void keyPressed() {
   }
   if (key == 'q' || key == 'Q') {
     camera.swapView();
+    view = !view;
+  }
+  if (!view && (key == 'i' || key == 'I')) {
+    camera.inverted = !camera.inverted;
+  }
+  if (camera.cameraControl && (key == 'e' || key == 'E')) {
+    camera.reset();
   }
 }

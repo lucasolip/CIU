@@ -3,6 +3,7 @@ class Camera {
   PVector alternateViewEye, alternateViewTarget;
   
   boolean cameraControl = false;
+  boolean inverted = true;
   float speed = 25f;
   float xAngle = 0;
   float yAngle = 0;
@@ -33,8 +34,14 @@ class Camera {
         target.add(moveDirection);
       }
       
-      difference.x = mouseX - pmouseX;
-      difference.y = mouseY - pmouseY;
+      if (mousePressed) {
+        difference.x = pmouseX - mouseX;
+        difference.y = pmouseY - mouseY;
+        if (!inverted) difference.mult(-1);
+      } else {
+        difference.mult(0);
+      }
+      
       
       targetAngle.x = -difference.x * mouseSensitivity.x;
       targetAngle.y = difference.y * mouseSensitivity.y;
@@ -43,28 +50,34 @@ class Camera {
       angle.x += xAngle;
       angle.y += yAngle;
       
-      target = vectorTranslate(target, PVector.mult(eye,-1));
+      target = MatrixOperations.vectorTranslate(target, PVector.mult(eye,-1));
       
-      target = yRotate(target, angle.x);
+      target = MatrixOperations.zRotate(target, yAngle*-sin(angle.x));
+      target = MatrixOperations.xRotate(target, yAngle*cos(angle.x));
       
-      target = xRotate(target, yAngle);
-      target = yRotate(target, xAngle);
+      target = MatrixOperations.yRotate(target, xAngle);
       
-      target = yRotate(target, -angle.x);
-      
-      target = vectorTranslate(target, eye);
-      println(angle);
+      target = MatrixOperations.vectorTranslate(target, eye);
     }
   }
   
   void display() {
-    beginCamera();
     camera(eye.x, eye.y, eye.z, target.x, target.y, target.z, 0, 1, 0);
-    /*translate(eye.x, eye.y, eye.z);
-    rotateX(yAngle);
-    rotateY(xAngle);
-    translate(-eye.x, -eye.y, -eye.z);*/
-    endCamera();
+  }
+  
+  void showSpaceship() {
+    pushMatrix();
+    PVector movingEye = (cameraControl)? eye : alternateViewEye;
+    PVector movingTarget = (cameraControl)? target : alternateViewTarget;
+    PVector position = PVector.sub(movingTarget, movingEye);
+    position.setMag(50);
+    position.add(movingEye);
+    translate(position.x, position.y, position.z);
+    rotateZ(angle.y*-sin(angle.x));
+    rotateX(angle.y*cos(angle.x));
+    rotateY(angle.x + HALF_PI);
+    shape(spaceship);
+    popMatrix();
   }
   
   void swapView() {
@@ -78,23 +91,11 @@ class Camera {
     cameraControl = !cameraControl;
   }
   
-  PVector xRotate(PVector point, float angle) {
-    PVector result = new PVector();
-    result.x = point.x;
-    result.y = cos(angle)*point.y - sin(angle)*point.z;
-    result.z = sin(angle)*point.y + cos(angle)*point.z;
-    return result;
+  void reset() {
+    eye = new PVector(0, -2500, 8000);
+    target = new PVector();
+    angle = new PVector();
   }
   
-  PVector yRotate(PVector point, float angle) {
-    PVector result = new PVector();
-    result.x = cos(angle)*point.x + sin(angle)*point.z;
-    result.y = point.y;
-    result.z = -sin(angle)*point.x + cos(angle)*point.z;
-    return result;
-  }
   
-  PVector vectorTranslate(PVector origin, PVector destination) {
-    return PVector.add(origin, destination);
-  }
 }

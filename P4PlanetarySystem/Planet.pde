@@ -61,28 +61,33 @@ class Planet extends CelestialBody {
     popMatrix();
   }
   
-  /*void displayName() {
+  void displayName() {
     stroke(255);
     pushMatrix();
     rotateY(reference.angle);
     translate(reference.position.x, reference.position.y, reference.position.z);
+    
     rotateX(secondaryAngle);
     rotateY(angle);
     translate(position.x, position.y, position.z);
-    float rotx = -atan2(camera.y, camera.z);
-    float roty = atan2(camera.x, sqrt(camera.y*camera.y + camera.z*camera.z));
-    float distance = PVector.dist(camera, position);
-    rotateY(-reference.angle);
-    rotateX(-secondaryAngle);
+
     rotateY(-angle);
-    rotateX(rotx);
-    rotateY(roty);
+    rotateX(-secondaryAngle);
+    rotateY(-reference.angle);
+    float distance = PVector.dist(camera.eye, PVector.add(MatrixOperations.xRotate(MatrixOperations.yRotate(position, angle), secondaryAngle), MatrixOperations.yRotate(reference.position, reference.angle)));
+    float size = 0.02*(distance/QUARTER_PI);
+    translate(0, -2*radius);
+    if (camera.cameraControl) {
+      rotateZ(camera.angle.y*-sin(camera.angle.x));
+      rotateX(camera.angle.y*cos(camera.angle.x));
+      rotateY(camera.angle.x);
+    } else {
+      rotateY(PI);
+    }
     fill(-1);
-    textSize(0.02*distance);
-    text(name, 0, -2*radius);
-    // La manera correcta de hacer esto sería determinar las coordenadas del planeta 
-    // en Screen space a partir de las coordenadas en World space, y dibujar el texto ahí, sobre la pantalla, con un cierto offset en y.
-    // Pero ahora mismo no sé cómo hacer eso con PeasyCam. Supongo que tendrá que ver con las coordenadas de la cámara y la proyección perspectiva
+    textSize(size);
+    textAlign(CENTER, CENTER);
+    text(name, 0, 0);
     popMatrix();
-  }*/
+  }
 }
