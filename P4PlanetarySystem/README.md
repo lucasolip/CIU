@@ -5,7 +5,7 @@
 ## Características
 Las distancias entre planetas, sus tamaños, velocidades de traslación y rotación, así como el ángulo de rotación de los satélites (las lunas) tienen cierto punto de aleatoriedad, para darle algo de belleza a la composición. 
 Para poder obtener una composición a gusto del usuario, se permite regenerar el sistema mediante la tecla R. Todos los cuerpos tienen textura.<br>
-La aplicación dispone de una vista general estática, para observar el sistema desde la lejanía, y una vista "de la nave" que se puede rotar haciendo click y arrastrando el ratón por la pantalla y mover hacia adelante pulsando espacio. También se permite regresar al punto inicial en vista de nave, porque es fácil perderse en el espacio sin un punto de referencia al que seguir, e invertir los controles al arrastrar el ratón, para que el movimiento siga al ratón o se asemeje más al arrastre táctil de los dispositivos móviles, a gusto del usuario.
+La aplicación dispone de una vista general estática, para observar el sistema desde la lejanía, y una vista "de la nave" que se puede rotar haciendo click y arrastrando el ratón por la pantalla y mover hacia adelante pulsando espacio. También se permite regresar al punto inicial en vista de nave, porque es fácil perderse en el espacio sin un punto de referencia al que seguir, e invertir los controles al arrastrar el ratón, para que el movimiento siga al ratón o se asemeje más al arrastre táctil de los dispositivos móviles.
 
 ## Implementación
 Las rotaciones de los cuerpos celestes son transformaciones respecto a sus centros de masa. 
