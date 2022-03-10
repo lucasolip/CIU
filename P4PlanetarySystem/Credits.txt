@@ -8,3 +8,4 @@ Megera: vektorDex, https://opengameart.org/content/planetary-textures-2048x1024-
 Dómino: vektorDex, https://opengameart.org/content/planetary-textures-2048x1024-gas-giant-equirectangular-7-2048x1024png
 Sedna: https://planet-texture-maps.fandom.com/wiki/Sedna
 Vanth: https://planet-texture-maps.fandom.com/wiki/Vanth
+Nave espacial: https://www.cgtrader.com/items/830734/download-page
