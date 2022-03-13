@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.text.ParsePosition;
 import java.util.TimeZone;
 import java.util.Locale;
+import processing.sound.*;
 
 PShape terrain;
 PShape bike;
@@ -21,6 +22,7 @@ float minlat, minlon, maxlat, maxlon;
 PGraphics map;
 PFont font;
 Camera cam;
+SoundFile music;
 
 long lowerBound, upperBound;
 Date currentTime;
@@ -36,7 +38,7 @@ void setup() {
   
   font = createFont("Open Sans", 128);
   textFont(font);
-  bike = loadShape("bicicleta.obj");
+  bike = loadShape("media/bicicleta.obj");
   
   cam = new Camera();
   
@@ -48,23 +50,19 @@ void setup() {
   lowerBound = sdf.parse("01/01/2021 00:00", new ParsePosition(0)).getTime();
   upperBound = sdf.parse("31/12/2021 23:59", new ParsePosition(0)).getTime();
   
-  texture = loadImage("pmap.png");
-  heightMap = loadImage("heightmap.png");
+  texture = loadImage("media/pmap.png");
+  heightMap = loadImage("media/heightmap.png");
   map = createGraphics(texture.width, texture.height);
   map.beginDraw();
   map.image(texture,0,0);
   map.endDraw();
   
   initializeData();
-  
-  /*map.beginDraw();
-  for (Track track : tracks) {
-    track.display();
-  }
-  map.endDraw();*/
 
   noStroke();
   generateTerrain();
+  music = new SoundFile(this, "media/gate.wav");
+  music.loop();
 }
 
 void draw() {
@@ -80,7 +78,6 @@ void draw() {
     PVector station = locations.get(location).copy();
     station.x = map(station.x, minlat, maxlat, 0, terrainSize);
     station.y = map(station.y, minlon, maxlon, 0, terrainSize);
-    station.z = terrainHeight*brightness(heightMap.pixels[floor(map(station.x, 0, terrainSize, 0, heightMap.width)) + floor(map(station.y, 0, terrainSize, 0, heightMap.height)) * heightMap.width])/255;
     translate(terrainSize/2, terrainSize/2, 0);
     rotateZ(-HALF_PI);
     translate(-terrainSize/2, -terrainSize/2, 0);
@@ -89,6 +86,7 @@ void draw() {
     scale(0.7);
     rotateX(HALF_PI);
     rotateY(bikeAngle);
+    fill(255, 238, 0);
     shape(bike);
     popMatrix();
     popMatrix();
@@ -112,8 +110,8 @@ void draw() {
 }
 
 void initializeData() {
-  mapData = loadXML("map.xml");
-  bikeData = loadTable("SITYCLETA-2021.csv", "header");
+  mapData = loadXML("media/map.xml");
+  bikeData = loadTable("media/SITYCLETA-2021.csv", "header");
   locations = new HashMap<String, PVector>();
   tracks = new ArrayList<Track>();
   
