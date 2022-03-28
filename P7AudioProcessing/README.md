@@ -16,4 +16,9 @@ En esta ocasión los controles se implementaron completamente como botones click
 - Botón de carga: Muestra una ventana de carga de ficheros que varía según el sistema operativo y solo permite elegir ficheros mp3
 - Control de frecuencia: Se puede arrastrar y controla el filtro de paso bajo
 
+# Herramientas
+- GIMP
+- [ezgif](https://ezgif.com/)
+
 # Referencias
+- [Referencia de Processing](https://processing.org/reference/)
