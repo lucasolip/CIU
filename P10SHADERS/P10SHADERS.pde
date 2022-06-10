@@ -25,7 +25,6 @@ void setup() {
   grassMaterial = loadShader("UnlitFrag.glsl", "GrassVert.glsl");
   dirtMaterial = loadShader("StandardFrag.glsl", "StandardVert.glsl");
   moonAlbedo = loadImage("MoonAlbedo.jpg");
-  moonNormal = loadImage("MoonNormal.jpg");
   grassAlbedo = loadImage("GrassAlbedo2.jpg");
   noNormal = loadImage("FlatNormal.jpg");
   grassObj = loadShape("grassBlades.obj");  
